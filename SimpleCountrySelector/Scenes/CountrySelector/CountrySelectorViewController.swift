@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class CountrySelectorViewController: UIViewController, BindableType {
     
@@ -19,12 +21,28 @@ final class CountrySelectorViewController: UIViewController, BindableType {
         return tableView
     }()
     
+    lazy var cancelBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+        return barButtonItem
+    }()
+    
+    private let disposeBag = DisposeBag()
+    
     func bindViewModel() {
+        let inputs = viewModel.inputs
+        let outputs = viewModel.outputs
         
+        cancelBarButtonItem.rx.action = inputs.closeAction
+        
+        outputs.title
+            .drive(navigationItem.rx.title)
+            .disposed(by: disposeBag)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.leftBarButtonItem = cancelBarButtonItem
         
         addCountriesTableView()
     }
