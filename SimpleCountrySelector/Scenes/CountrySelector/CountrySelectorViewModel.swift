@@ -12,6 +12,7 @@ import RxCocoa
 
 protocol CountrySelectorViewModelInput {
     var closeAction: CocoaAction { get }
+    var selectCountryAction: Action<CountryViewModel, Void> { get }
 }
 
 protocol CountrySelectorViewModelOutput {
@@ -38,6 +39,8 @@ final class CountrySelectorViewModel: CountrySelectorViewModelType, CountrySelec
         }
     }()
     
+    var selectCountryAction: Action<CountryViewModel, Void>
+    
     var title: Driver<String> {
         let title = "Country Selector"
         return Observable.just(title).asDriver(onErrorJustReturn: title)
@@ -54,7 +57,15 @@ final class CountrySelectorViewModel: CountrySelectorViewModelType, CountrySelec
     
     // MARK: - Initialization
     
-    init(sceneCoordinator: SceneCoordinatorType) {
+    init(sceneCoordinator: SceneCoordinatorType, onSelectCountry: Action<CountryViewModel, Void>) {
         self.sceneCoordinator = sceneCoordinator
+        self.selectCountryAction = onSelectCountry
+        
+        selectCountryAction.executionObservables
+            .take(1)
+            .subscribe(onNext: { _ in
+                sceneCoordinator.pop()
+            })
+            .disposed(by: disposeBag)
     }
 }

@@ -15,7 +15,7 @@ protocol HomeViewModelInput {
 }
 
 protocol HomeViewModelOutput {
-    
+    var buttonTitle: Driver<CountryViewModel> { get }
 }
 
 protocol HomeViewModelType {
@@ -32,19 +32,37 @@ final class HomeViewModel: HomeViewModelType, HomeViewModelInput, HomeViewModelO
     
     lazy var selectCountryAction: CocoaAction = {
         return CocoaAction { [unowned self] _ in
-            let countrySelectorViewModel = CountrySelectorViewModel(sceneCoordinator: self.sceneCoordinator)
+            let countrySelectorViewModel = CountrySelectorViewModel(sceneCoordinator: self.sceneCoordinator, onSelectCountry: self.onSelectCountry())
             self.sceneCoordinator.transition(to: .countrySelector(countrySelectorViewModel), type: .modal)
             return .empty()
         }
     }()
     
+    var buttonTitle: Driver<CountryViewModel> {
+        return buttonTitleProperty
+            .asDriver(onErrorJustReturn: CountryViewModel(countryFlag: Utils.countryCodeToFlag(code: "EG"),
+                                                          countryCode: "EG",
+                                                          countryName: "Egypt"))
+    }
+    
     // MARK: Private Properties
     
     private let sceneCoordinator: SceneCoordinatorType
+    private let disposeBag = DisposeBag()
+    private let buttonTitleProperty = BehaviorSubject<CountryViewModel>(value: CountryViewModel(countryFlag: Utils.countryCodeToFlag(code: "EG"),
+                                                                                                countryCode: "EG",
+                                                                                                countryName: "Egypt"))
     
     // MARK: - Initialization
     
     init(sceneCoordinator: SceneCoordinatorType) {
         self.sceneCoordinator = sceneCoordinator
+    }
+    
+    func onSelectCountry() -> Action<CountryViewModel, Void> {
+        return Action { [unowned self] selectedCountry in
+            self.buttonTitleProperty.onNext(selectedCountry)
+            return .empty()
+        }
     }
 }

@@ -38,6 +38,17 @@ final class CountrySelectorViewController: UIViewController, BindableType {
         
         cancelBarButtonItem.rx.action = inputs.closeAction
         
+        countriesTableView.rx.itemSelected
+            .do(onNext: { [unowned self] indexPath in
+                self.countriesTableView.deselectRow(at: indexPath, animated: false)
+            })
+            .map { [unowned self] indexPath in
+                try! self.dataSource.model(at: indexPath) as! CountryViewModel
+            }
+            .subscribe(inputs.selectCountryAction.inputs)
+            .disposed(by: self.disposeBag)
+
+        
         outputs.title
             .drive(navigationItem.rx.title)
             .disposed(by: disposeBag)
