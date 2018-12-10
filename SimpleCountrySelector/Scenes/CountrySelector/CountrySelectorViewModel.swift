@@ -16,6 +16,7 @@ protocol CountrySelectorViewModelInput {
 
 protocol CountrySelectorViewModelOutput {
     var title: Driver<String> { get }
+    var countries: Driver<[CountryViewModel]> { get }
 }
 
 protocol CountrySelectorViewModelType {
@@ -38,14 +39,18 @@ final class CountrySelectorViewModel: CountrySelectorViewModelType, CountrySelec
     }()
     
     var title: Driver<String> {
-        return titleProperty.asDriver(onErrorJustReturn: "Country Selector")
+        let title = "Country Selector"
+        return Observable.just(title).asDriver(onErrorJustReturn: title)
+    }
+    
+    var countries: Driver<[CountryViewModel]> {
+        return Utils.getCountryCodes().asDriver(onErrorJustReturn: [])
     }
     
     // MARK: Private Properties
     
     private let sceneCoordinator: SceneCoordinatorType
     private let disposeBag = DisposeBag()
-    private let titleProperty = BehaviorSubject<String>(value: "Country Selector")
     
     // MARK: - Initialization
     

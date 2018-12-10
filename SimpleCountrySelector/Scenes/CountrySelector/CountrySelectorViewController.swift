@@ -9,10 +9,13 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 final class CountrySelectorViewController: UIViewController, BindableType {
     
     var viewModel: CountrySelectorViewModelType!
+    
+    typealias CountriesListSectionModel = SectionModel<String, CountryViewModel>
     
     lazy var countriesTableView: UITableView = {
        let tableView = UITableView(frame: .zero, style: .plain)
@@ -27,6 +30,7 @@ final class CountrySelectorViewController: UIViewController, BindableType {
     }()
     
     private let disposeBag = DisposeBag()
+    private var dataSource: RxTableViewSectionedReloadDataSource<CountriesListSectionModel>!
     
     func bindViewModel() {
         let inputs = viewModel.inputs
@@ -36,6 +40,11 @@ final class CountrySelectorViewController: UIViewController, BindableType {
         
         outputs.title
             .drive(navigationItem.rx.title)
+            .disposed(by: disposeBag)
+        
+        outputs.countries
+            .map { [CountriesListSectionModel(model: "", items: $0)] }
+            .drive(countriesTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
     
@@ -48,11 +57,24 @@ final class CountrySelectorViewController: UIViewController, BindableType {
     }
     
     private func addCountriesTableView() {
+        
+        countriesTableView.register(UITableViewCell.self, forCellReuseIdentifier: "countriesListTableViewCellIdentifier")
+        dataSource = RxTableViewSectionedReloadDataSource<CountriesListSectionModel>(configureCell:  tableViewDataSource)
+        
         view.addSubview(countriesTableView)
         
         countriesTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         countriesTableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         countriesTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         countriesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
+    private var tableViewDataSource: TableViewSectionedDataSource<CountriesListSectionModel>.ConfigureCell {
+        return { _, tableView, indexPath, cellModel in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "countriesListTableViewCellIdentifier")!
+            cell.textLabel?.text = cellModel.name
+            
+            return cell
+        }
     }
 }

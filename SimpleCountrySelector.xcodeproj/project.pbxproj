@@ -19,6 +19,7 @@
 		68A21E0921BEFBD300F36500 /* BindableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A21E0821BEFBD300F36500 /* BindableType.swift */; };
 		68A21E0C21BEFE4000F36500 /* CountrySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A21E0B21BEFE4000F36500 /* CountrySelectorViewController.swift */; };
 		68A21E0E21BEFE4D00F36500 /* CountrySelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A21E0D21BEFE4D00F36500 /* CountrySelectorViewModel.swift */; };
+		68A21E1021BF097300F36500 /* CountryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A21E0F21BF097300F36500 /* CountryViewModel.swift */; };
 		68CDE1C421BEF43A0084EA7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CDE1C321BEF43A0084EA7C /* AppDelegate.swift */; };
 		68CDE1CB21BEF43D0084EA7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68CDE1CA21BEF43D0084EA7C /* Assets.xcassets */; };
 		68CDE1CE21BEF43D0084EA7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68CDE1CC21BEF43D0084EA7C /* LaunchScreen.storyboard */; };
@@ -36,6 +37,7 @@
 		68A21E0821BEFBD300F36500 /* BindableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindableType.swift; sourceTree = "<group>"; };
 		68A21E0B21BEFE4000F36500 /* CountrySelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectorViewController.swift; sourceTree = "<group>"; };
 		68A21E0D21BEFE4D00F36500 /* CountrySelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySelectorViewModel.swift; sourceTree = "<group>"; };
+		68A21E0F21BF097300F36500 /* CountryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryViewModel.swift; sourceTree = "<group>"; };
 		68CDE1C021BEF43A0084EA7C /* SimpleCountrySelector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleCountrySelector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68CDE1C321BEF43A0084EA7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68CDE1CA21BEF43D0084EA7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			children = (
 				68A21E0B21BEFE4000F36500 /* CountrySelectorViewController.swift */,
 				68A21E0D21BEFE4D00F36500 /* CountrySelectorViewModel.swift */,
+				68A21E0F21BF097300F36500 /* CountryViewModel.swift */,
 			);
 			path = CountrySelector;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				68A21E0E21BEFE4D00F36500 /* CountrySelectorViewModel.swift in Sources */,
 				68A21DFF21BEFAF700F36500 /* Scene.swift in Sources */,
 				68A21DF821BEFA8900F36500 /* HomeViewController.swift in Sources */,
+				68A21E1021BF097300F36500 /* CountryViewModel.swift in Sources */,
 				68A21E0921BEFBD300F36500 /* BindableType.swift in Sources */,
 				68A21DFC21BEFAAD00F36500 /* HomeViewModel.swift in Sources */,
 				68A21E0521BEFB5900F36500 /* Scene+ViewController.swift in Sources */,
